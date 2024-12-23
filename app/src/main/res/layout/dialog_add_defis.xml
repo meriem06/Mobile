@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/edittext_defis_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Defis Description"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/button_add_defis_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Defis"
+        android:layout_marginTop="16dp"
+        android:background="@color/purple_500"
+        android:textColor="@android:color/white" />
+</LinearLayout>
