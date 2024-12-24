@@ -1,39 +1,40 @@
 package com.example.usermanagmentecotracker;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.example.usermanagmentecotracker.Database.AppDatabase;
-import com.example.usermanagmentecotracker.Entity.Defis;
 import com.example.usermanagmentecotracker.Entity.User;
+import com.example.usermanagmentecotracker.NameDatabaseJihed.DatabaseName;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
+    private AppDatabase db;  // AppDatabase instance
+    private ExecutorService executorService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Set up the toolbar
+        // Initialize Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -46,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Get NavigationView
+        // Get NavigationView and set up header
         NavigationView navigationView = findViewById(R.id.navigation_view);
 
         // Retrieve user data from the intent
@@ -55,17 +56,20 @@ public class HomeActivity extends AppCompatActivity {
         String userEmail = intent.getStringExtra("userEmail");
         String defaultFragment = intent.getStringExtra("defaultFragment");
 
-        // Set the name and email
-        TextView userNameTextView = navigationView.getHeaderView(0).findViewById(R.id.header_user_name);
-        TextView userEmailTextView = navigationView.getHeaderView(0).findViewById(R.id.header_user_email);
+        // Set the name and email in the header
+        View headerView = navigationView.getHeaderView(0);
+        TextView userNameTextView = headerView.findViewById(R.id.header_user_name);
+        TextView userEmailTextView = headerView.findViewById(R.id.header_user_email);
         userNameTextView.setText(userName != null ? userName : "Unknown User");
         userEmailTextView.setText(userEmail != null ? userEmail : "No Email");
+
+        // Fetch user data
 
         // Load the default fragment
         if (defaultFragment != null && defaultFragment.equals("GPSFragment")) {
             loadFragment(new GpsFragment());
         } else {
-            loadFragment(new HomeFragment()); // Replace this with your default fragment
+            loadFragment(new HomeFragment()); // Default fragment
         }
 
         // Handle navigation menu item clicks
@@ -86,17 +90,46 @@ public class HomeActivity extends AppCompatActivity {
             drawerLayout.closeDrawers();
             return true;
         });
+
+        // Initialize ExecutorService for background tasks
+        executorService = Executors.newSingleThreadExecutor();
     }
 
+    // Fetch user data from the database and populate the UI
+    private void fetchUserData(String userEmail) {
+        // Initialize the Room database
+        db = Room.databaseBuilder(this, AppDatabase.class, DatabaseName.nameOfDatabase).build();
 
-    private void showDefisFragment() {
-        // Create and display a fragment with the list of defis
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, new DefisFragment())
-                .addToBackStack(null)
-                .commit();
+        // Run the database query on a background thread
+        executorService.execute(() -> {
+            User user = db.userDao().getUserByEmail(userEmail);
+            if (user != null) {
+                runOnUiThread(() -> {
+                    // Populate user data on the UI
+                    TextView userNameTextView = findViewById(R.id.header_user_name);
+                    TextView userEmailTextView = findViewById(R.id.header_user_email);
+                    ImageView profileImageView = findViewById(R.id.profile_image);
+
+                    userNameTextView.setText(user.getName());
+                    userEmailTextView.setText(user.getEmail());
+
+                    // Load the profile image if available
+                    String imagePath = user.getProfileImagePath();
+                    if (imagePath != null && !imagePath.isEmpty()) {
+                        profileImageView.setImageURI(Uri.parse(imagePath));
+                    } else {
+                        profileImageView.setImageResource(R.drawable.ic_profile); // Default image
+                    }
+                });
+            } else {
+                runOnUiThread(() -> {
+                    Toast.makeText(HomeActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
+
+    // Load a fragment into the fragment container
     void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -104,4 +137,10 @@ public class HomeActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Shutdown the ExecutorService to avoid memory leaks
+        executorService.shutdown();
+    }
 }

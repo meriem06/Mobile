@@ -10,14 +10,26 @@ public class User {
 
     private String name;
     private String birthdate;
+
+    public String getProfileImagePath() {
+        return profileImagePath;
+    }
+
+    public void setProfileImagePath(String profileImagePath) {
+        this.profileImagePath = profileImagePath;
+    }
+
     private String password;
     private String email;
     private boolean isVerified;
+    private String profileImagePath;  // New column for storing image path
+
 
     public User() {}
 
-    public User(String name, String birthdate, String password, String email) {
+    public User(String name, String birthdate, String password, String email  ) {
         this.name = name;
+        this.profileImagePath = "empty"  ;
         this.birthdate = birthdate;
         this.password = password;
         this.email = email;

@@ -31,10 +31,13 @@ public interface UserDao {
     @Query("UPDATE users SET password = :password WHERE email = :email")
     void updateUserPassword(String email, String password);
 
+    @Query("UPDATE users SET profileImagePath = :imagePath WHERE email = :userEmail")
+    void updateImagePath(String userEmail, String imagePath);
 
     @Query("UPDATE users SET name = :name, birthdate = :birthdate, password = :password WHERE email = :email")
     void updateUserDetails(String email, String name, String birthdate, String password);
 
     @Query("UPDATE users SET isVerified = :isVerified WHERE email = :email")
     void updateUserVerificationStatus(String email, boolean isVerified);
+
 }

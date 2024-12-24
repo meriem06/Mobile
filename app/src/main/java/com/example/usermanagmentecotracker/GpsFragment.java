@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usermanagmentecotracker.Database.AppDatabase;
@@ -39,9 +38,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class GpsFragment extends Fragment {
+
     public static float dist, walkTime, carTime;
-    public static String placeName ;
-    private TextView locationText, accuracyText, distanceText;
+    public static String placeName;
     private LocationManager locationManager;
     private MapView mapView;
     private AppDatabase db;
@@ -56,7 +55,6 @@ public class GpsFragment extends Fragment {
         db = Room.databaseBuilder(requireContext(), AppDatabase.class, DatabaseName.nameOfDatabase).build();
 
         // Initialize UI elements
-
         mapView = view.findViewById(R.id.mapView);
 
         // Configure OSMDroid
@@ -69,9 +67,18 @@ public class GpsFragment extends Fragment {
         // Initialize LocationManager
         locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
+        // Request permissions if not granted
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Request permission if not granted
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+
         // "View Consommations" button setup
         Button viewConsommationsButton = view.findViewById(R.id.viewConsommationsButton);
-        Button viewConsommationsStats = view.findViewById(R.id.showStatisticsButton); // this is the button i want it to displays a popup like the other button but with a graphe contains each one the place name and the distance that goes on this are the consommations table thing :
+        Button viewConsommationsStats = view.findViewById(R.id.showStatisticsButton);
+
+        // View consommation button click listener
         viewConsommationsButton.setOnClickListener(v -> {
             new Thread(() -> {
                 List<Consommation> consommations = db.consommationDao().getConsommationsForUser(LoginActivity.idUserToConsommations);
@@ -87,15 +94,17 @@ public class GpsFragment extends Fragment {
                 });
             }).start();
         });
+
+        // View statistics button click listener
         viewConsommationsStats.setOnClickListener(v -> {
             new Thread(() -> {
-                // Fetch the consommation data
+                // Fetch consommation data for statistics
                 List<Consommation> consommations = db.consommationDao().getConsommationsForUser(LoginActivity.idUserToConsommations);
 
                 // Show the popup on the UI thread
                 requireActivity().runOnUiThread(() -> {
                     if (consommations != null && !consommations.isEmpty()) {
-                        // Create a new StatisticsPopupFragment and pass the consommation data
+                        // Create and show StatisticsPopupFragment
                         StatisticsPopupFragment popupFragment = StatisticsPopupFragment.newInstance(consommations);
                         popupFragment.show(requireActivity().getSupportFragmentManager(), "StatisticsPopup");
                     } else {
@@ -105,7 +114,6 @@ public class GpsFragment extends Fragment {
             }).start();
         });
 
-
         // Search bar setup
         androidx.appcompat.widget.SearchView searchView = view.findViewById(R.id.searchPlace);
         searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
@@ -114,18 +122,15 @@ public class GpsFragment extends Fragment {
                 // Perform geocoding when search is submitted
                 getPlaceCoordinates(query);
                 placeName = query;
+                // Show a dialog with the details of the searched place
                 PopupDialogFragment popupDialogFragment = new PopupDialogFragment();
                 Bundle args = new Bundle();
                 args.putString("distance", String.valueOf(dist));
                 args.putString("walkingTime", String.valueOf(walkTime));
                 args.putString("carTime", String.valueOf(carTime));
-                args.putString("placeName",placeName);
-
+                args.putString("placeName", placeName);
                 popupDialogFragment.setArguments(args);
-
-                // Show the dialog
                 popupDialogFragment.show(((AppCompatActivity) getContext()).getSupportFragmentManager(), "PopupDialog");
-
                 return true;
             }
 
@@ -172,14 +177,13 @@ public class GpsFragment extends Fragment {
             double longitude = location.getLongitude();
             float accuracy = location.getAccuracy();
 
-
-            // Update the map
+            // Update the map with the current location
             GeoPoint geoPoint = new GeoPoint(latitude, longitude);
             IMapController mapController = mapView.getController();
             mapController.setZoom(15.0);
             mapController.setCenter(geoPoint);
 
-            // Add a marker
+            // Add a marker for the current location
             Marker marker = new Marker(mapView);
             marker.setPosition(geoPoint);
             marker.setTitle("You are here");
@@ -213,25 +217,26 @@ public class GpsFragment extends Fragment {
                 double latitude = address.getLatitude();
                 double longitude = address.getLongitude();
 
-                // Calculate distance between current location and searched place
+                // Calculate distance and time to the searched location
                 Location placeLocation = new Location("");
                 placeLocation.setLatitude(latitude);
                 placeLocation.setLongitude(longitude);
 
                 float distanceInMeters = currentLocation.distanceTo(placeLocation);
-                dist = distanceInMeters;
+                dist = distanceInMeters / 1000;
 
                 // Calculate walking and driving time
                 walkTime = calculateWalkingTime(distanceInMeters);
                 carTime = calculateCarTime(distanceInMeters);
 
-                // Add a marker for the searched location on the map
+                // Add a marker for the searched place
                 GeoPoint geoPoint = new GeoPoint(latitude, longitude);
                 Marker marker = new Marker(mapView);
                 marker.setPosition(geoPoint);
                 marker.setTitle(placeName);
                 mapView.getOverlays().add(marker);
             } else {
+                Toast.makeText(requireContext(), "Place not found.", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -240,13 +245,13 @@ public class GpsFragment extends Fragment {
 
     private float calculateWalkingTime(float distanceInMeters) {
         // Average walking speed is 5 km/h (5000 meters per hour)
-        float walkingSpeed = 5000.0f; // meters per hour
-        return (distanceInMeters / walkingSpeed) * 60; // time in minutes
+        float walkingSpeed = 5.0f; // meters per hour
+        return (distanceInMeters / walkingSpeed) ; // time in minutes
     }
 
     private float calculateCarTime(float distanceInMeters) {
         // Average driving speed is 50 km/h (50000 meters per hour)
-        float drivingSpeed = 50000.0f; // meters per hour
-        return (distanceInMeters / drivingSpeed) * 60; // time in minutes
+        float drivingSpeed = 50.0f; // meters per hour
+        return (distanceInMeters / drivingSpeed) ; // time in minutes
     }
 }
