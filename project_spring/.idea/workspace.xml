@@ -4,7 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7339afbd-2bfe-4336-b2d9-ab3a0af38ef1" name="Changes" comment="bakcend springboot" />
+    <list default="true" id="7339afbd-2bfe-4336-b2d9-ab3a0af38ef1" name="Changes" comment="bakcend springboot">
+      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/ProjectSpringApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/entity/UserTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/impl/ImpUserTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/repository/IUserRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/restControllers/UserTestRest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/services/IUserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/project_spring/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/ProjectSpringApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/entity/Consommation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/entity/Defis.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/repository/ConsommationRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/repository/DefisRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/restControllers/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/services/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,9 +60,16 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2qlcxYgdZspr069r20pdckwQQ2n" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -47,6 +86,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.ProjectSpringApplication.executor": "Run",
+    "git-widget-placeholder": "backend__springboot",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/mstsk/OneDrive/Desktop/4sleam1/dev mobile/project_spring",
     "node.js.detected.package.eslint": "true",
@@ -113,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735242002852</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="backenduser">
+      <option name="closed" value="true" />
+      <created>1735311529206</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1735311529206</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +180,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="bakcend springboot" />
-    <option name="LAST_COMMIT_MESSAGE" value="bakcend springboot" />
+    <MESSAGE value="backenduser" />
+    <option name="LAST_COMMIT_MESSAGE" value="backenduser" />
   </component>
 </project>
