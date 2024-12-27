@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/popup_background"
+    android:layout_gravity="center"
+    android:elevation="4dp">
+
+    <!-- Distance Text -->
+    <TextView
+        android:id="@+id/popupDistanceText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Distance: N/A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/purple"
+        android:padding="8dp"
+        android:background="@drawable/text_background"
+        android:layout_marginBottom="12dp" />
+    <TextView
+        android:id="@+id/popupCostText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cost: N/A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/purple"
+        android:padding="8dp"
+        android:background="@drawable/text_background"
+        android:layout_marginBottom="12dp" />
+    <TextView
+        android:id="@+id/popupPlacenameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Place Name : N/A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/purple"
+        android:padding="8dp"
+        android:background="@drawable/text_background"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Walking Time Text -->
+    <TextView
+        android:id="@+id/popupWalkingTimeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Walking Time: N/A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/purple"
+        android:padding="8dp"
+        android:background="@drawable/text_background"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Car Time Text -->
+    <TextView
+        android:id="@+id/popupCarTimeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Car Time: N/A"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/purple"
+        android:padding="8dp"
+        android:background="@drawable/text_background"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/popupSaveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/purple"
+        android:padding="14dp"
+        android:layout_marginTop="12dp"
+        android:elevation="2dp" />
+</LinearLayout>
