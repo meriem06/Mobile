@@ -22,6 +22,9 @@ public interface ConsommationDao {
     @Transaction
     @Query("SELECT * FROM consommations WHERE userId = :userId ORDER BY CAST(distance AS REAL) ASC")
     List<Consommation> getConsommationsSortedByDistance(int userId);
+    @Transaction
+    @Query("SELECT * FROM consommations WHERE userId = :userId ORDER BY CAST(cost AS REAL) ASC")
+    List<Consommation> getConsommationsSortedByCost(int userId);
 
     @Query("DELETE FROM consommations WHERE userId = :userId")
     void deleteAllConsommationsForUser(int userId);

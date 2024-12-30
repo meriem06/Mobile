@@ -60,7 +60,7 @@ public class PopupDialogFragment extends DialogFragment {
         walkingTimeText.setText("Walking Time: " + walkingTime + "HOURS");
         carTimeText.setText("Car Time: " + carTime + "HOURS");
         placeDestinationName.setText("place name : " + placeName);
-        costText.setText("place name : " + cost +" TND");
+        costText.setText("Cost : " + cost +" TND");
 
 
         saveButton.setOnClickListener(v -> {
@@ -68,7 +68,7 @@ public class PopupDialogFragment extends DialogFragment {
             new Thread(() -> {
                 Consommation consommation = new Consommation();
                 consommation.setDistance(distance);
-                consommation.setTime(walkingTime);
+                consommation.setTime(carTime);
                 consommation.setPlace(placeName);
                 consommation.setCost(cost);
                 consommation.setUserId(LoginActivity.idUserToConsommations);
@@ -90,7 +90,7 @@ public class PopupDialogFragment extends DialogFragment {
         super.onStart();
         // Set the dialog to appear like a popup
         if (getDialog() != null && getDialog().getWindow() != null) {
-            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
     }
 }

@@ -84,8 +84,21 @@ public class SignUpActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        // Check if all fields are filled
         if (name.isEmpty() || birthdate.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Email validation using regex
+        if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Password validation (example: must be at least 6 characters long)
+        if (password.length() < 6) {
+            Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -94,8 +107,8 @@ public class SignUpActivity extends AppCompatActivity {
         String subject = "Your Verification Code";
         String messageBody = "Your verification code is: " + verificationCode;
 
-        /*EmailSender emailSender = new EmailSender(email, subject, messageBody);
-        emailSender.execute();*/
+    /*EmailSender emailSender = new EmailSender(email, subject, messageBody);
+    emailSender.execute();*/
 
         Intent intent = new Intent(SignUpActivity.this, VerificationActivity.class);
         intent.putExtra("name", name);
@@ -105,6 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
         intent.putExtra("verificationCode", verificationCode);
         startActivity(intent);
     }
+
 
     private String generateVerificationCode() {
         int code = (int) (Math.random() * 9000) + 1000; // Generates a 4-digit code

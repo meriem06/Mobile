@@ -34,10 +34,10 @@ public class ConsommationAdapter extends RecyclerView.Adapter<ConsommationAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Consommation consommation = consommations.get(position);
-        holder.placeTextView.setText("Place : "+consommation.getPlace());
-        holder.distanceTextView.setText("Distance : "+consommation.getDistance());
-        holder.timeTextView.setText("Car time : "+consommation.getTime());
-        holder.costTextView.setText("Cost : "+consommation.getCost());
+        holder.placeTextView.setText("Place name : "+consommation.getPlace());
+        holder.distanceTextView.setText("Distance : "+consommation.getDistance() +"Km");
+        holder.timeTextView.setText("Car time : "+consommation.getTime() +" Hours");
+        holder.costTextView.setText("Cost : "+consommation.getCost()+" TND");
     }
 
     @Override

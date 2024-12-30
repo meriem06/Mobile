@@ -28,6 +28,7 @@ import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
 import com.example.usermanagmentecotracker.JihedPackage.Entity.User;
 import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
 import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
+import com.example.usermanagmentecotracker.JihedPackage.api.UserApi;
 import com.example.usermanagmentecotracker.R;
 
 import java.io.IOException;
@@ -39,6 +40,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserEditFragment extends Fragment {
 
@@ -128,7 +135,9 @@ public class UserEditFragment extends Fragment {
         String updatedName = editTextUserName.getText().toString().trim();
         if (!updatedName.isEmpty()) {
             executorService.execute(() -> {
+
                 db.userDao().updateUserName(userId, updatedName);
+                updateUsernameInSpringDatabase(userId, updatedName);
                 requireActivity().runOnUiThread(() ->
                         Toast.makeText(requireContext(), "Name updated successfully", Toast.LENGTH_SHORT).show()
                 );
@@ -144,6 +153,7 @@ public class UserEditFragment extends Fragment {
         if (!updatedEmail.isEmpty()) {
             executorService.execute(() -> {
                 db.userDao().updateUserEmail(updatedEmail, userId);
+                updateEmailInSpringDatabase(userId, updatedEmail);
                 requireActivity().runOnUiThread(() ->
                         Toast.makeText(requireContext(), "Email updated successfully", Toast.LENGTH_SHORT).show()
                 );
@@ -162,6 +172,7 @@ public class UserEditFragment extends Fragment {
                 User user = db.userDao().getUserById(userId);
                 if (user != null && user.getPassword().equals(oldPassword)) {
                     db.userDao().updateUserPassword(userId, newPassword);
+                    updatePasswordInSpringDatabase(userId,newPassword);
                     requireActivity().runOnUiThread(() ->
                             Toast.makeText(requireContext(), "Password updated successfully", Toast.LENGTH_SHORT).show()
                     );
@@ -265,4 +276,152 @@ public class UserEditFragment extends Fragment {
         super.onDestroy();
         executorService.shutdown(); // Properly shut down the executor service
     }
+    //*******************************************************************************************************
+    private void updateUsernameInSpringDatabase(int userId, String newName) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL) // Ensure this is defined correctly in LoginActivity
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        UserApi userApi = retrofit.create(UserApi.class);
+
+        // Make sure the UserApi method matches the backend API endpoint
+        Call<String> call = userApi.updateUsername(userId, newName);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    // Update UI on success
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Username updated successfully!", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    // Handle response failure
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Update failed: " + response.message(), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Handle network failure or exception
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    private void updateEmailInSpringDatabase(int userId, String newEmail) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL) // Ensure this is defined correctly in LoginActivity
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        UserApi userApi = retrofit.create(UserApi.class);
+
+        // Make sure the UserApi method matches the backend API endpoint
+        Call<String> call = userApi.updateEmail(userId, newEmail);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    // Update UI on success
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Email updated successfully!", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    // Handle response failure
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Update failed: " + response.message(), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Handle network failure or exception
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    private void updatePasswordInSpringDatabase(int userId, String newPassword) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL) // Ensure this is defined correctly in LoginActivity
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        UserApi userApi = retrofit.create(UserApi.class);
+
+        // Make sure the UserApi method matches the backend API endpoint
+        Call<String> call = userApi.updatePassword(userId, newPassword);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    // Update UI on success
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Password updated successfully!", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    // Handle response failure
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Update failed: " + response.message(), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Handle network failure or exception
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+    private void updateBirthdateInSpringDatabase(int userId, String newBirthdate) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL) // Ensure this is defined correctly in LoginActivity
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        UserApi userApi = retrofit.create(UserApi.class);
+
+        // Make sure the UserApi method matches the backend API endpoint
+        Call<String> call = userApi.updateBirthdate(userId, newBirthdate);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    // Update UI on success
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Birthdate updated successfully!", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    // Handle response failure
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Update failed: " + response.message(), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Handle network failure or exception
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
 }

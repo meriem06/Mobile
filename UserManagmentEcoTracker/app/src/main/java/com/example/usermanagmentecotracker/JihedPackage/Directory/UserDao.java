@@ -11,7 +11,7 @@ public interface UserDao {
     @Insert
     void insertUser(User user);
 
-    @Query("SELECT * FROM users WHERE email = :email AND password = :password")
+    @Query("SELECT * FROM users WHERE email = :email AND password = :password limit 1")
     User login(String email, String password);
 
     @Query("SELECT * FROM users WHERE email = :email")

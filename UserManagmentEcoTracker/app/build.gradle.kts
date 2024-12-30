@@ -57,12 +57,11 @@ dependencies {
     // JavaMail API from Maven Central
    // implementation("com.sun.mail:javax.mail:1.6.2")
 
-    // OkHttp (Optional for making network calls)
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation ("org.osmdroid:osmdroid-android:6.1.10")
     implementation ("com.android.volley:volley:1.2.1")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
+    implementation ("com.google.android.material:material:1.9.0")
 
     // Unit testing
     testImplementation(libs.junit)

@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
 import com.example.usermanagmentecotracker.JihedPackage.Entity.Consommation;
+import com.example.usermanagmentecotracker.JihedPackage.HomeActivity;
 import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
 import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
 import com.example.usermanagmentecotracker.JihedPackage.jihedFragments.ConsommationPopupFragment;
@@ -92,8 +93,9 @@ public class GpsFragment extends Fragment {
                 // Show the popup on the UI thread
                 requireActivity().runOnUiThread(() -> {
                     if (consommations != null && !consommations.isEmpty()) {
-                        ConsommationPopupFragment popupFragment = new ConsommationPopupFragment(consommations);
-                        popupFragment.show(requireActivity().getSupportFragmentManager(), "ConsommationPopup");
+                        loadConsommationFragment();
+                       // ConsommationPopupFragment popupFragment = new ConsommationPopupFragment(consommations);
+                        //popupFragment.show(requireActivity().getSupportFragmentManager(), "ConsommationPopup");
                     } else {
                         Toast.makeText(requireContext(), "No consommations found for the user.", Toast.LENGTH_SHORT).show();
                     }
@@ -251,6 +253,13 @@ public class GpsFragment extends Fragment {
         }
     }
 
+    private void loadConsommationFragment() {
+        // Get the activity and call the method to load the ConsommationFragment
+        if (getActivity() instanceof HomeActivity) {
+            ConsommationPopupFragment consommationFragment = new ConsommationPopupFragment();
+            ((HomeActivity) getActivity()).loadFragment(consommationFragment);
+        }
+    }
     private float calculateWalkingTime(float distanceInMeters) {
         // Average walking speed is 5 km/h (5000 meters per hour)
         float walkingSpeed = 5000.0f; // meters per hour
