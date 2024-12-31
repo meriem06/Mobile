@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_delete_all"
+        android:icon="@drawable/ic_delete"
+    android:title="Delete All" />
+
+    <item
+        android:id="@+id/action_sort_by_distance"
+        android:icon="@drawable/ic_sort"
+    android:title="Sort by Distance" />
+
+    <item
+        android:id="@+id/action_sort_by_cost"
+        android:icon="@drawable/ic_cost"
+        android:title="Sort by Cost" />
+    <item
+        android:id="@+id/return_action"
+        android:icon="@drawable/ic_logout"
+        android:title="Return" />
+
+
+</menu>

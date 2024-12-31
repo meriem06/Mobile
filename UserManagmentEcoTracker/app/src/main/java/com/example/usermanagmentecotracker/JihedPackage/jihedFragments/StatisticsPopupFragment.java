@@ -93,7 +93,7 @@ public class StatisticsPopupFragment extends DialogFragment {
         }
 
         // Create PieDataSet and configure its properties
-        PieDataSet dataSet = new PieDataSet(entries, "Top 4 Consommations");
+        PieDataSet dataSet = new PieDataSet(entries, "Top 4 Consumptions");
         dataSet.setColors(new int[]{
                 android.R.color.holo_blue_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light
@@ -105,7 +105,7 @@ public class StatisticsPopupFragment extends DialogFragment {
         PieData pieData = new PieData(dataSet);
         pieChart.setData(pieData);
         pieChart.getDescription().setEnabled(false);
-        pieChart.setCenterText("Top 4 Consommations");
+        pieChart.setCenterText("Top 4 Consumptions");
         pieChart.setCenterTextSize(14f);
         pieChart.animateY(1000);
         pieChart.invalidate();

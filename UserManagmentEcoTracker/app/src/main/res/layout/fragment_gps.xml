@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
- >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Main content area -->
     <LinearLayout
@@ -27,8 +27,8 @@
         <!-- Map View -->
         <org.osmdroid.views.MapView
             android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="605dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="563dp" />
     </LinearLayout>
 
     <!-- Bottom navigation menu -->
@@ -43,26 +43,24 @@
         android:elevation="4dp">
 
         <!-- View Consommations Button -->
-        <Button
-            android:id="@+id/viewConsommationsButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="View Consommations"
-            android:backgroundTint="@color/purple"
-            android:textColor="@android:color/white"
-            android:drawablePadding="8dp" />
+
 
         <!-- Show Statistics Button -->
-        <Button
-            android:id="@+id/showStatisticsButton"
-            android:layout_width="0dp"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_gps"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Show Statistics"
-            android:backgroundTint="@color/purple"
-            android:textColor="@android:color/white"
-            android:drawablePadding="8dp" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="-1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="-1dp"
+            android:background="@color/white"
+            app:itemIconTint="@color/purple"
+            app:itemTextColor="@color/purple_500"
+            app:menu="@menu/button_gps_navmenu" />
     </LinearLayout>
 
 </RelativeLayout>

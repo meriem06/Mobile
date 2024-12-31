@@ -60,10 +60,10 @@ public class DefisActivity extends AppCompatActivity {
     private void addNewDefis() {
         // Add a default new defis
         new Thread(() -> {
-            Defis newDefis = new Defis("New Defis Description", 1, false); // Replace userId with actual value
+            Defis newDefis = new Defis("New Challenge Description", 1, false); // Replace userId with actual value
             db.defisDao().insertDefis(newDefis);
             runOnUiThread(() -> {
-                Toast.makeText(this, "Defis Added!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Challenge Added!", Toast.LENGTH_SHORT).show();
                 loadDefis(); // Reload to reflect changes
             });
         }).start();

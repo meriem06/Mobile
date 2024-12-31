@@ -83,9 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     });
                 } else {
-                    runOnUiThread(() -> {
+
                         Toast.makeText(this, "Invalid credentials or account not verified", Toast.LENGTH_SHORT).show();
-                    });
+
                 }
             }).start();
         });

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
 import com.example.usermanagmentecotracker.JihedPackage.Directory.ConsommationDao;
 import com.example.usermanagmentecotracker.JihedPackage.Entity.Consommation;
+import com.example.usermanagmentecotracker.JihedPackage.HomeActivity;
 import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
 import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
 import com.example.usermanagmentecotracker.R;
@@ -78,6 +79,10 @@ public class ConsommationPopupFragment extends DialogFragment {
             sortConsommationsByCost();
             return true;
         }
+         else if (item.getItemId() == R.id.return_action){
+                loadGpsFragment();
+                return true;
+            }
             return false;
         });
 
@@ -173,5 +178,12 @@ public class ConsommationPopupFragment extends DialogFragment {
                 });
             }
         });
+    }
+    private void loadGpsFragment() {
+        // Get the activity and call the method to load the ConsommationFragment
+        if (getActivity() instanceof HomeActivity) {
+            GpsFragment gpsFragment = new GpsFragment();
+            ((HomeActivity) getActivity()).loadFragment(gpsFragment);
+        }
     }
 }

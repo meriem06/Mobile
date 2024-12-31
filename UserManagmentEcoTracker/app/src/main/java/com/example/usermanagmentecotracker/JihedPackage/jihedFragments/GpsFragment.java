@@ -33,6 +33,7 @@ import com.example.usermanagmentecotracker.JihedPackage.jihedFragments.Consommat
 import com.example.usermanagmentecotracker.JihedPackage.jihedFragments.PopupDialogFragment;
 import com.example.usermanagmentecotracker.R;
 import com.example.usermanagmentecotracker.JihedPackage.jihedFragments.StatisticsPopupFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -82,45 +83,50 @@ public class GpsFragment extends Fragment {
         }
 
         // "View Consommations" button setup
-        Button viewConsommationsButton = view.findViewById(R.id.viewConsommationsButton);
-        Button viewConsommationsStats = view.findViewById(R.id.showStatisticsButton);
+        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottom_navigation_gps);
+        //Button viewConsommationsButton = view.findViewById(R.id.viewConsommationsButton);
+        //Button viewConsommationsStats = view.findViewById(R.id.showStatisticsButton);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.viewConsommationsButton) {
+                new Thread(() -> {
+                    List<Consommation> consommations = db.consommationDao().getConsommationsForUser(LoginActivity.idUserToConsommations);
 
-        // View consommation button click listener
-        viewConsommationsButton.setOnClickListener(v -> {
-            new Thread(() -> {
-                List<Consommation> consommations = db.consommationDao().getConsommationsForUser(LoginActivity.idUserToConsommations);
+                    // Show the popup on the UI thread
+                    requireActivity().runOnUiThread(() -> {
+                        if (consommations != null && !consommations.isEmpty()) {
+                            loadConsommationFragment();
+                            // ConsommationPopupFragment popupFragment = new ConsommationPopupFragment(consommations);
+                            //popupFragment.show(requireActivity().getSupportFragmentManager(), "ConsommationPopup");
+                        } else {
+                            Toast.makeText(requireContext(), "No consommations found for the user.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).start();
+                return true;
+            } else if (item.getItemId() == R.id.showStatisticsButton) {
+                new Thread(() -> {
+                    // Fetch consommation data for statistics
+                    List<Consommation> consommations = db.consommationDao().getConsommationsForUser(LoginActivity.idUserToConsommations);
 
-                // Show the popup on the UI thread
-                requireActivity().runOnUiThread(() -> {
-                    if (consommations != null && !consommations.isEmpty()) {
-                        loadConsommationFragment();
-                       // ConsommationPopupFragment popupFragment = new ConsommationPopupFragment(consommations);
-                        //popupFragment.show(requireActivity().getSupportFragmentManager(), "ConsommationPopup");
-                    } else {
-                        Toast.makeText(requireContext(), "No consommations found for the user.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }).start();
+                    // Show the popup on the UI thread
+                    requireActivity().runOnUiThread(() -> {
+                        if (consommations != null && !consommations.isEmpty()) {
+                            // Create and show StatisticsPopupFragment
+                            StatisticsPopupFragment popupFragment = StatisticsPopupFragment.newInstance(consommations);
+                            popupFragment.show(requireActivity().getSupportFragmentManager(), "StatisticsPopup");
+                        } else {
+                            Toast.makeText(requireContext(), "No consommations found for statistics.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).start();
+                return true;
+            }
+            return false;
         });
+
 
         // View statistics button click listener
-        viewConsommationsStats.setOnClickListener(v -> {
-            new Thread(() -> {
-                // Fetch consommation data for statistics
-                List<Consommation> consommations = db.consommationDao().getConsommationsForUser(LoginActivity.idUserToConsommations);
 
-                // Show the popup on the UI thread
-                requireActivity().runOnUiThread(() -> {
-                    if (consommations != null && !consommations.isEmpty()) {
-                        // Create and show StatisticsPopupFragment
-                        StatisticsPopupFragment popupFragment = StatisticsPopupFragment.newInstance(consommations);
-                        popupFragment.show(requireActivity().getSupportFragmentManager(), "StatisticsPopup");
-                    } else {
-                        Toast.makeText(requireContext(), "No consommations found for statistics.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }).start();
-        });
 
         // Search bar setup
         androidx.appcompat.widget.SearchView searchView = view.findViewById(R.id.searchPlace);
