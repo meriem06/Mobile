@@ -16,7 +16,7 @@
         android:title="Sort by Cost" />
     <item
         android:id="@+id/return_action"
-        android:icon="@drawable/ic_logout"
+        android:icon="@drawable/ic_return"
         android:title="Return" />
 
 
