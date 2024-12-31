@@ -4,38 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7339afbd-2bfe-4336-b2d9-ab3a0af38ef1" name="Changes" comment="bakcend springboot">
-      <change afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/ProjectSpringApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/entity/UserTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/impl/ImpUserTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/repository/IUserRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/restControllers/UserTestRest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/src/main/java/tn/esprit/project_spring/services/IUserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project_spring/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/ProjectSpringApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/entity/Consommation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/entity/Defis.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/repository/ConsommationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/repository/DefisRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/restControllers/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/services/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="7339afbd-2bfe-4336-b2d9-ab3a0af38ef1" name="Changes" comment="spring user 7adher tnajmou tsobouh w thotou alihom repo + service">
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/restControllers/ConsommationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/restControllers/DefisController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/services/ConsommationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/services/DefisServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/repository/ConsommationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tn/esprit/project_spring/repository/ConsommationRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,33 +51,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.project_spring [install].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.ProjectSpringApplication.executor": "Run",
-    "git-widget-placeholder": "backend__springboot",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/mstsk/OneDrive/Desktop/4sleam1/dev mobile/project_spring",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.project_spring [install].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ProjectSpringApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;backend__springboot&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mstsk/OneDrive/Desktop/4sleam1/dev mobile/project_spring&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="ProjectSpringApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="project_spring" />
@@ -128,6 +104,8 @@
       <option name="presentableId" value="Default" />
       <updated>1735240850139</updated>
       <workItem from="1735240851255" duration="1818000" />
+      <workItem from="1735592321964" duration="663000" />
+      <workItem from="1735673556478" duration="2857000" />
     </task>
     <task id="LOCAL-00001" summary="bakcend springboot">
       <option name="closed" value="true" />
@@ -161,7 +139,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735311529206</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="spring user 7adher tnajmou tsobouh w thotou alihom repo + service">
+      <option name="closed" value="true" />
+      <created>1735312488635</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1735312488635</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +167,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="bakcend springboot" />
     <MESSAGE value="backenduser" />
-    <option name="LAST_COMMIT_MESSAGE" value="backenduser" />
+    <MESSAGE value="spring user 7adher tnajmou tsobouh w thotou alihom repo + service" />
+    <option name="LAST_COMMIT_MESSAGE" value="spring user 7adher tnajmou tsobouh w thotou alihom repo + service" />
   </component>
 </project>
