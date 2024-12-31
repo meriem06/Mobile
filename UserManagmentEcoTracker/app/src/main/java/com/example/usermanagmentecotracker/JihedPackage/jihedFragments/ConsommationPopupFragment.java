@@ -21,6 +21,7 @@ import com.example.usermanagmentecotracker.JihedPackage.Entity.Consommation;
 import com.example.usermanagmentecotracker.JihedPackage.HomeActivity;
 import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
 import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
+import com.example.usermanagmentecotracker.JihedPackage.api.ConsommationApi;
 import com.example.usermanagmentecotracker.R;
 import com.example.usermanagmentecotracker.JihedPackage.adaptateurs.ConsommationAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,6 +29,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConsommationPopupFragment extends DialogFragment {
     private ExecutorService executorService;
@@ -73,10 +80,12 @@ public class ConsommationPopupFragment extends DialogFragment {
                 return true;
             } else if (item.getItemId() == R.id.action_sort_by_distance) {
                 sortConsommationsByDistance();
+                getConsommationsSortedByDistance();
                 return true;
             }
          else if (item.getItemId() == R.id.action_sort_by_cost) {
             sortConsommationsByCost();
+                getConsommationsSortedByCost();
             return true;
         }
          else if (item.getItemId() == R.id.return_action){
@@ -122,6 +131,7 @@ public class ConsommationPopupFragment extends DialogFragment {
                             requireActivity().runOnUiThread(() -> {
                                 consommations.clear();
                                 adapter.notifyDataSetChanged();
+                                deleteAllConsommationsFromDatabase();
                                 Toast.makeText(getContext(), "All consommations deleted.", Toast.LENGTH_SHORT).show();
                             });
                         } catch (Exception e) {
@@ -186,4 +196,103 @@ public class ConsommationPopupFragment extends DialogFragment {
             ((HomeActivity) getActivity()).loadFragment(gpsFragment);
         }
     }
+
+    //*******************************************************
+    private void deleteAllConsommationsFromDatabase() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ConsommationApi consommationApi = retrofit.create(ConsommationApi.class);
+
+        Call<String> call = consommationApi.deleteAllConsommations();
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    requireActivity().runOnUiThread(() ->
+                            Toast.makeText(requireContext(), "All consommations deleted successfully!", Toast.LENGTH_SHORT).show());
+                } else {
+                    requireActivity().runOnUiThread(() ->
+                            Toast.makeText(requireContext(), "Delete failed: " + response.message(), Toast.LENGTH_SHORT).show());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                requireActivity().runOnUiThread(() ->
+                        Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+    private void getConsommationsSortedByCost() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ConsommationApi consommationApi = retrofit.create(ConsommationApi.class);
+
+        Call<List<Consommation>> call = consommationApi.getConsommationsSortedByCost();
+
+        call.enqueue(new Callback<List<Consommation>>() {
+            @Override
+            public void onResponse(Call<List<Consommation>> call, Response<List<Consommation>> response) {
+                if (response.isSuccessful()) {
+                    List<Consommation> consommations = response.body();
+                    requireActivity().runOnUiThread(() -> {
+                        // Update UI with the sorted consommations
+                        Toast.makeText(requireContext(), "Fetched " + consommations.size() + " consommations.", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    requireActivity().runOnUiThread(() ->
+                            Toast.makeText(requireContext(), "Fetch failed: " + response.message(), Toast.LENGTH_SHORT).show());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Consommation>> call, Throwable t) {
+                requireActivity().runOnUiThread(() ->
+                        Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+    private void getConsommationsSortedByDistance() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ConsommationApi consommationApi = retrofit.create(ConsommationApi.class);
+
+        Call<List<Consommation>> call = consommationApi.getConsommationsSortedByDistance();
+
+        call.enqueue(new Callback<List<Consommation>>() {
+            @Override
+            public void onResponse(Call<List<Consommation>> call, Response<List<Consommation>> response) {
+                if (response.isSuccessful()) {
+                    List<Consommation> consommations = response.body();
+                    requireActivity().runOnUiThread(() -> {
+                        // Update UI with the sorted consommations
+                        Toast.makeText(requireContext(), "Fetched " + consommations.size() + " consommations.", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    requireActivity().runOnUiThread(() ->
+                            Toast.makeText(requireContext(), "Fetch failed: " + response.message(), Toast.LENGTH_SHORT).show());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Consommation>> call, Throwable t) {
+                requireActivity().runOnUiThread(() ->
+                        Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
+
+
 }

@@ -18,9 +18,16 @@ import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
 import com.example.usermanagmentecotracker.JihedPackage.Entity.Consommation;
 import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
 import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
+import com.example.usermanagmentecotracker.JihedPackage.api.ConsommationApi;
 import com.example.usermanagmentecotracker.R;
 
 import org.w3c.dom.Text;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PopupDialogFragment extends DialogFragment {
 
@@ -74,7 +81,7 @@ public class PopupDialogFragment extends DialogFragment {
                 consommation.setUserId(LoginActivity.idUserToConsommations);
 
                 db.consommationDao().insertConsommation(consommation);
-
+                addConsommationToDatabase(consommation);
                 requireActivity().runOnUiThread(() -> {
                     Toast.makeText(requireContext(), "Data saved successfully", Toast.LENGTH_SHORT).show();
                     dismiss();
@@ -93,4 +100,35 @@ public class PopupDialogFragment extends DialogFragment {
             getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
+ //********************************************************************************//
+    private void addConsommationToDatabase(Consommation consommation) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ConsommationApi consommationApi = retrofit.create(ConsommationApi.class);
+
+        Call<String> call = consommationApi.addConsommation(consommation);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    requireActivity().runOnUiThread(() ->
+                            Toast.makeText(requireContext(), "Consommation added successfully!", Toast.LENGTH_SHORT).show());
+                } else {
+                    requireActivity().runOnUiThread(() ->
+                            Toast.makeText(requireContext(), "Add failed: " + response.message(), Toast.LENGTH_SHORT).show());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                requireActivity().runOnUiThread(() ->
+                        Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show());
+            }
+        });
+    }
+
 }

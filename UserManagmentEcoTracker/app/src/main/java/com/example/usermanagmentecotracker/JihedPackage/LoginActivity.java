@@ -27,6 +27,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     public static final String BASE_URL = "http://192.168.100.137:3333/";  // Change to your server's IP
     public static int idUserToConsommations;
+    public static User userToSpringBoot;
+
     private EditText editTextEmail, editTextPassword;
     private Button buttonLogin;
     UserApi userApi;
@@ -69,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             new Thread(() -> {
                 User user = db.userDao().login(email, password);
                 idUserToConsommations = user.getId();
-
+               userToSpringBoot = user;
                 if (user != null && user.isVerified()) {
                     runOnUiThread(() -> {
                         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();

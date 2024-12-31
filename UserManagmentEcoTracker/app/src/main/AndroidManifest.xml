@@ -21,9 +21,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/logomobilr"
         android:label="EcoTracker"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logomobilr"
         android:supportsRtl="true"
         android:theme="@style/Theme.UserManagmentEcoTracker"
         tools:targetApi="31">

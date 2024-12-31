@@ -18,12 +18,20 @@ import androidx.room.Room;
 
 import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
 import com.example.usermanagmentecotracker.JihedPackage.Entity.Defis;
+import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
 import com.example.usermanagmentecotracker.JihedPackage.adaptateurs.DefisAdapter;
 import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
+import com.example.usermanagmentecotracker.JihedPackage.api.DefisApi;
 import com.example.usermanagmentecotracker.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DefisFragment extends Fragment {
 
@@ -88,7 +96,7 @@ public class DefisFragment extends Fragment {
             new Thread(() -> {
                 Defis newDefis = new Defis(description, 1, false); // Replace 1 with actual user ID if needed
                 db.defisDao().insertDefis(newDefis);
-
+                insertDefis(newDefis);
                 getActivity().runOnUiThread(() -> {
                     Toast.makeText(getContext(), "Defis added successfully!", Toast.LENGTH_SHORT).show();
                     loadDefis(); // Reload the list
@@ -99,4 +107,41 @@ public class DefisFragment extends Fragment {
 
         dialog.show();
     }
+    //********************************************************************************************
+    private void insertDefis(Defis defis) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(LoginActivity.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        DefisApi defisApi = retrofit.create(DefisApi.class);
+
+        // API Call to insert the Defis
+        Call<String> call = defisApi.addDefis(defis);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    // Notify the user of success
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Defis added successfully!", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    // Handle errors from the server
+                    requireActivity().runOnUiThread(() -> {
+                        Toast.makeText(requireContext(), "Failed to add Defis: " + response.message(), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // Handle communication failures
+                requireActivity().runOnUiThread(() -> {
+                    Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
 }
