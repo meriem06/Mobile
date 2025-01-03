@@ -10,16 +10,16 @@ import java.util.List;
 public interface DefisApi {
 
 
-    @POST("api/defis/add")
+    @POST("/defis/add")
     Call<String> addDefis(@Body Defis defis);
 
 
-    @PUT("api/defis/update-is-completed/{id}")
+    @PUT("/defis/update-is-completed/{id}")
     Call<String> updateIsCompleted(@Path("id") long id, @Body Boolean isCompleted);
 
-    @GET("api/defis/all")
+    @GET("/defis/all")
     Call<List<Defis>> getAllDefis();
 
-    @DELETE("api/defis/delete/{id}")
+    @DELETE("/defis/delete/{id}")
     Call<String> deleteDefis(@Path("id") long id);
 }

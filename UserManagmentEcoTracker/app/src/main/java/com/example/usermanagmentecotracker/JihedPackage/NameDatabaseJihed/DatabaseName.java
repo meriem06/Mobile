@@ -1,5 +1,5 @@
 package com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed;
 
 public class DatabaseName {
-    public final static String nameOfDatabase = "ecotrakerrrrrrrr";
+    public final static String nameOfDatabase = "eeeeeeeeeeeeeeeee";
 }

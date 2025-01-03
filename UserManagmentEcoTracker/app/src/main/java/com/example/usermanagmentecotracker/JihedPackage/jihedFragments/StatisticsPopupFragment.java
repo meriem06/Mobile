@@ -7,7 +7,13 @@ import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usermanagmentecotracker.R;
@@ -28,6 +34,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class StatisticsPopupFragment extends DialogFragment {
 
@@ -47,12 +55,12 @@ public class StatisticsPopupFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistics_popup, container, false);
 
-        // Initialize UI components
         barChart = view.findViewById(R.id.barChart);
         PieChart pieChart = view.findViewById(R.id.pieChart);
         Button buttonDone = view.findViewById(R.id.buttonDone);
+        Spinner yearSpinner = view.findViewById(R.id.yearSpinner);
+        TableLayout monthlyTable = view.findViewById(R.id.monthlyConsumptionTable);
 
-        // Retrieve consommations data
         List<Consommation> consommations = getConsommationsFromArgs();
         if (consommations != null && !consommations.isEmpty()) {
             displayBarChart(consommations);
@@ -61,10 +69,65 @@ public class StatisticsPopupFragment extends DialogFragment {
             Toast.makeText(getContext(), "No data available for statistics.", Toast.LENGTH_SHORT).show();
         }
 
-        // Handle the Done button click
+        // Populate year spinner and handle selection
+        populateYearSpinner(yearSpinner, consommations, monthlyTable);
+
         buttonDone.setOnClickListener(v -> dismiss());
 
         return view;
+    }
+
+    private void populateYearSpinner(Spinner spinner, List<Consommation> consommations, TableLayout table) {
+        List<String> years = extractYearsFromConsommations(consommations);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, years);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedYear = years.get(position);
+                updateMonthlyTable(table, consommations, selectedYear);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private List<String> extractYearsFromConsommations(List<Consommation> consommations) {
+        Set<String> years = new TreeSet<>();
+        for (Consommation consommation : consommations) {
+            String year = consommation.getDate().split("-")[0]; // Assuming date is in "YYYY-MM-DD" format
+            years.add(year);
+        }
+        return new ArrayList<>(years);
+    }
+
+    private void updateMonthlyTable(TableLayout table, List<Consommation> consommations, String year) {
+        table.removeViews(1, table.getChildCount() - 1);
+
+        float[] monthlyCosts = new float[12];
+        for (Consommation consommation : consommations) {
+            if (consommation.getDate().startsWith(year)) {
+                int month = Integer.parseInt(consommation.getDate().split("-")[1]) - 1;
+                monthlyCosts[month] += Float.parseFloat(consommation.getCost());
+            }
+        }
+
+        String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        for (int i = 0; i < 12; i++) {
+            TableRow row = new TableRow(getContext());
+            TextView monthCell = new TextView(getContext());
+            TextView costCell = new TextView(getContext());
+
+            monthCell.setText(months[i]);
+            costCell.setText(String.format("%.2f", monthlyCosts[i]));
+
+            row.addView(monthCell);
+            row.addView(costCell);
+            table.addView(row);
+        }
     }
 
     // Retrieve consommations data from arguments
