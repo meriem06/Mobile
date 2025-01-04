@@ -50,10 +50,11 @@ dependencies {
     // Play Services
     implementation(libs.play.services.safetynet)
 
+
     // Retrofit and Gson Converter
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
+    implementation ("com.github.anastr:speedviewlib:1.6.1") // library waeel
     // JavaMail API from Maven Central
    // implementation("com.sun.mail:javax.mail:1.6.2")
 
