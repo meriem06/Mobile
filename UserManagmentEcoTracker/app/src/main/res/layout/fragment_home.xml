@@ -22,6 +22,7 @@
         android:id="@+id/button_sound"
         android:layout_width="143dp"
         android:layout_height="108dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
         android:background="@color/material_dynamic_neutral_variant100"
         android:src="@drawable/sound_bg"
@@ -39,5 +40,29 @@
         android:text="Open GPS Fragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_gps_fragment" />
+
+    <ImageView
+        android:id="@+id/button_aceleration"
+        android:layout_width="143dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="44dp"
+        android:background="@color/material_dynamic_neutral_variant100"
+        android:src="@drawable/speed_image"
+        android:text="Open GPS Fragment"
+        app:layout_constraintStart_toEndOf="@+id/button_lum"
+        app:layout_constraintTop_toBottomOf="@+id/button_sound" />
+
+    <ImageView
+        android:id="@+id/button_temp"
+        android:layout_width="143dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/material_dynamic_neutral_variant100"
+        android:src="@drawable/temperature_background"
+        android:text="Open GPS Fragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_lum" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

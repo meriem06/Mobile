@@ -25,6 +25,10 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true // Ensure BuildConfig is enabled
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -44,9 +48,11 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.room.common)
     implementation(libs.room.runtime)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
     implementation(libs.recyclerview)
     annotationProcessor(libs.room.compiler)
-
+    implementation ("com.google.android.gms:play-services-location:19.0.1")
     // Play Services
     implementation(libs.play.services.safetynet)
 
@@ -57,6 +63,10 @@ dependencies {
     implementation ("com.github.anastr:speedviewlib:1.6.1") // library waeel
     // JavaMail API from Maven Central
    // implementation("com.sun.mail:javax.mail:1.6.2")
+    implementation ("com.google.android.material:material:1.5.0")
+    implementation("com.airbnb.android:lottie:6.1.0")
+    // TODO: Review play services library required for activity recognition.
+    implementation ("com.google.android.gms:play-services-location:19.0.1")
 
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation ("org.osmdroid:osmdroid-android:6.1.10")

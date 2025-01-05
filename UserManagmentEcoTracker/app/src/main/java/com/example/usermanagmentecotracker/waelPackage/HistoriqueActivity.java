@@ -11,6 +11,7 @@ import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
 import com.example.usermanagmentecotracker.JihedPackage.Directory.HistoriqueDao;
 import com.example.usermanagmentecotracker.JihedPackage.Entity.HistoriqueTable;
 import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
+import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
 import com.example.usermanagmentecotracker.JihedPackage.adaptateurs.HistoriqueAdapter;
 import com.example.usermanagmentecotracker.R;
 
@@ -30,7 +31,7 @@ public class HistoriqueActivity extends AppCompatActivity {
         setContentView(R.layout.activity_historique);
 
         // Initialiser Room Database
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "app-database")
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, DatabaseName.nameOfDatabase)
                 .fallbackToDestructiveMigration()
                 .build();
         historiqueDao = db.historiqueDao();

@@ -22,6 +22,7 @@ import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
 import com.example.usermanagmentecotracker.JihedPackage.Directory.HistoriqueDao;
 import com.example.usermanagmentecotracker.JihedPackage.Entity.HistoriqueTable;
 import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
+import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
 import com.example.usermanagmentecotracker.R;
 import com.github.anastr.speedviewlib.PointerSpeedometer;
 
@@ -46,7 +47,7 @@ public class SoundmeterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soundmeter);
 
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "app-database")
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, DatabaseName.nameOfDatabase)
                 .fallbackToDestructiveMigration()  // Permet de supprimer les anciennes versions si nécessaire
                 .build();
 

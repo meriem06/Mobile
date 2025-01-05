@@ -17,10 +17,12 @@ import androidx.room.Room;
 import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
 import com.example.usermanagmentecotracker.JihedPackage.Directory.LuminositeDAO;
 import com.example.usermanagmentecotracker.JihedPackage.Entity.Luminosite;
+import com.example.usermanagmentecotracker.JihedPackage.HomeActivity;
 import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
 import com.example.usermanagmentecotracker.JihedPackage.adaptateurs.MyAdapter;
 import com.example.usermanagmentecotracker.JihedPackage.api.LuminositeApi;
 import com.example.usermanagmentecotracker.JihedPackage.api.RetrofitInstance;
+import com.example.usermanagmentecotracker.JihedPackage.jihedFragments.ConsommationPopupFragment;
 import com.example.usermanagmentecotracker.R;
 
 import java.util.ArrayList;
@@ -116,7 +118,9 @@ AffichageLuminisitee extends Fragment {
                     .replace(R.id.fragment_container, fragmentAjouter)
                     .addToBackStack(null)
                     .commit();
+
         });
+
 
         Button button2 = view.findViewById(R.id.buttonstatistique);
         button2.setOnClickListener(v -> {
@@ -125,6 +129,7 @@ AffichageLuminisitee extends Fragment {
                     .replace(R.id.fragment_container, fragmentStatistique)
                     .addToBackStack(null)
                     .commit();
+
         });
 
         Button button3 = view.findViewById(R.id.button11);
