@@ -4,6 +4,10 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 @Entity(
         tableName = "consommations",
         foreignKeys = @ForeignKey(
@@ -17,27 +21,27 @@ public class Consommation {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    public String getCost() {
-        return cost;
-    }
-
-    public void setCost(String cost) {
-        this.cost = cost;
-    }
-
     private int userId; // Foreign key to User table
     private String distance;
     private String place;
     private String cost;
     private String time;
 
-    public Consommation() {}
+    private String date; // Field for the current date
 
-    public Consommation(int userId, String distance, String place, String time) {
+    // Default constructor
+    public Consommation() {
+        this.date = getCurrentDate();
+    }
+
+    // Constructor with fields
+    public Consommation(int userId, String distance, String place, String time, String cost) {
         this.userId = userId;
         this.distance = distance;
         this.place = place;
         this.time = time;
+        this.cost = cost;
+        this.date = getCurrentDate(); // Automatically set the current date
     }
 
     // Getters and Setters
@@ -51,4 +55,13 @@ public class Consommation {
     public void setPlace(String place) { this.place = place; }
     public String getTime() { return time; }
     public void setTime(String time) { this.time = time; }
+    public String getCost() { return cost; }
+    public void setCost(String cost) { this.cost = cost; }
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
+
+    // Helper method to get the current date in "yyyy-MM-dd" format
+    private String getCurrentDate() {
+        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+    }
 }
