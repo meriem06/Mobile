@@ -39,7 +39,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -64,7 +64,7 @@
     &quot;Spring Boot.ProjectSpringApplication.executor&quot;: &quot;Run&quot;,
     &quot;git-widget-placeholder&quot;: &quot;backend__springboot&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/mstsk/OneDrive/Desktop/4sleam1/dev mobile/project_spring&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/benmr/Desktop/m4/Mobile-GPS/project_spring/src/main/java/tn/esprit/project_spring&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -78,6 +78,17 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\benmr\Desktop\m4\Mobile-GPS\project_spring\src\main\java\tn\esprit\project_spring" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="tn.esprit.project_spring.services" />
+      <recent name="tn.esprit.project_spring.restControllers" />
+      <recent name="tn.esprit.project_spring.repository" />
+      <recent name="tn.esprit.project_spring.entity" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="ProjectSpringApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="project_spring" />
@@ -90,8 +101,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.9-jbr-17.0.9-4caba194b151-51f1b679" />
-        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.24807.4" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.24807.4" />
       </set>
     </attachedChunks>
   </component>
@@ -106,6 +117,11 @@
       <workItem from="1735240851255" duration="1818000" />
       <workItem from="1735592321964" duration="663000" />
       <workItem from="1735673556478" duration="2857000" />
+      <workItem from="1736070911789" duration="4903000" />
+      <workItem from="1736075954629" duration="57000" />
+      <workItem from="1736172594593" duration="1205000" />
+      <workItem from="1736542354636" duration="675000" />
+      <workItem from="1736606323343" duration="13000" />
     </task>
     <task id="LOCAL-00001" summary="bakcend springboot">
       <option name="closed" value="true" />

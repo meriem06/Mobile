@@ -3,6 +3,8 @@ package tn.esprit.project_spring.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -21,4 +23,6 @@ public class User {
     private String email;
     private boolean isVerified;
     private String profileImagePath;
+    @OneToMany
+    List<Luminosite> luminosites ;
 }
