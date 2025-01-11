@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
 import com.example.usermanagmentecotracker.JihedPackage.api.RetrofitInstance;
 import com.example.usermanagmentecotracker.R;
 
@@ -92,7 +93,7 @@ public class TemperatureFragment extends Fragment implements SensorEventListener
                 String formattedDate = dateFormat.format(new Date());
 
                 // Create a new TemperatureEntry
-                TemperatureEntry newEntry = new TemperatureEntry(String.valueOf(tempDouble), formattedDate);
+                TemperatureEntry newEntry = new TemperatureEntry(String.valueOf(tempDouble), formattedDate, LoginActivity.idUserToConsommations);
 
                 // Add the entry to the shared data list
                 List<TemperatureEntry> temperatureList = TemperatureData.getTemperatureList();

@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
+
 
 import com.example.usermanagmentecotracker.R;
 
@@ -68,7 +70,7 @@ public class EditTemperature extends Fragment {
                     }
 
                     // Update the entry in TemperatureData
-                    TemperatureEntry updatedEntry = new TemperatureEntry(String.valueOf(temperatureValue), newDate);
+                    TemperatureEntry updatedEntry = new TemperatureEntry(String.valueOf(temperatureValue), newDate, LoginActivity.idUserToConsommations);
                     TemperatureData.getTemperatureList().set(position, updatedEntry);
 
                     Toast.makeText(getContext(), "Température modifiée avec succès", Toast.LENGTH_SHORT).show();

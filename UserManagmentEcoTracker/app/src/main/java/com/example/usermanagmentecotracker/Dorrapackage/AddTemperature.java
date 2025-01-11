@@ -13,24 +13,32 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
+
+import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
+import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
+import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
+import com.example.usermanagmentecotracker.JihedPackage.Entity.TemperatureEntry;
 
 import com.example.usermanagmentecotracker.R;
 
 public class AddTemperature extends Fragment {
     private EditText inputTemperature;
     private DatePicker datePicker;
+    AppDatabase db ;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.add_temp, container, false);
-
+        db = Room.databaseBuilder(requireContext(), AppDatabase.class, DatabaseName.nameOfDatabase).build();
         // Initialize views
         datePicker = rootView.findViewById(R.id.date_picker);
         inputTemperature = rootView.findViewById(R.id.input_temperature);
         ImageButton backButton = rootView.findViewById(R.id.back_button);
         Button submitButton = rootView.findViewById(R.id.submit_button);
+
 
         // Back Button Logic
         backButton.setOnClickListener(v -> {
@@ -60,10 +68,12 @@ public class AddTemperature extends Fragment {
                     String date = getSelectedDate();
 
                     // Create a new TemperatureEntry object with the input and date
-                    TemperatureEntry entry = new TemperatureEntry(String.valueOf(temperature), date);
-
+                    TemperatureEntry entry = new TemperatureEntry(String.valueOf(temperature), date , LoginActivity.idUserToConsommations);
+                    new Thread(() -> {
+                        db.temperatureDao().insert(entry);
+                    }).start();
                     // Add the entry to the shared data list
-                    TemperatureData.addTemperatureEntry(entry);
+                    //TemperatureData.addTemperatureEntry(entry);
 
                     // Show success message
                     Toast.makeText(getContext(), "Température ajoutée avec succès", Toast.LENGTH_SHORT).show();

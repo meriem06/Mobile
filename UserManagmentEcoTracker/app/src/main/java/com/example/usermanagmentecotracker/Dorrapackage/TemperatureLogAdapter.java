@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import com.example.usermanagmentecotracker.JihedPackage.Entity.TemperatureEntry;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usermanagmentecotracker.R;

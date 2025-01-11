@@ -12,6 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+
+import com.example.usermanagmentecotracker.JihedPackage.Database.AppDatabase;
+import com.example.usermanagmentecotracker.JihedPackage.LoginActivity;
+import com.example.usermanagmentecotracker.JihedPackage.NameDatabaseJihed.DatabaseName;
+import com.example.usermanagmentecotracker.JihedPackage.Entity.TemperatureEntry;
 
 import com.example.usermanagmentecotracker.R;
 
@@ -20,6 +26,7 @@ import java.util.List;
 public class DisplayTemperatures extends Fragment {
     private TemperatureLogAdapter adapter; // Declare the adapter as a field
     private RecyclerView recyclerView;
+    private AppDatabase db;
 
     @Nullable
     @Override
@@ -31,19 +38,22 @@ public class DisplayTemperatures extends Fragment {
         ImageButton backHome = view.findViewById(R.id.button_home);
         backHome.setOnClickListener(v -> requireActivity().onBackPressed());
 
+        // Initialize database
+        db = Room.databaseBuilder(requireContext(), AppDatabase.class, DatabaseName.nameOfDatabase).build();
+
         // Refresh button logic
         ImageButton refreshButton = view.findViewById(R.id.refresh);
         refreshButton.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Refreshing data...", Toast.LENGTH_SHORT).show();
             refreshData();
         });
+
         // Navigate to Statistics
         ImageButton statButton = view.findViewById(R.id.statButton);
         statButton.setOnClickListener(v -> {
             try {
                 // Navigate to the Statistic fragment
                 Fragment temperatureStatisticsFragment = new Statistic();
-
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, temperatureStatisticsFragment) // Ensure correct container ID
@@ -59,15 +69,19 @@ public class DisplayTemperatures extends Fragment {
         recyclerView = view.findViewById(R.id.temperature_log_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Retrieve data from shared data class
-        List<TemperatureEntry> temperatureList = TemperatureData.getTemperatureList();
+        // Fetch data asynchronously but update RecyclerView on the main thread
+        new Thread(() -> {
+            // Fetch data from the database on a background thread
+            List<TemperatureEntry> temperatureList = db.temperatureDao().getTemperaturesByuserid(LoginActivity.idUserToConsommations);
 
-        // Set up the adapter
-        adapter = new TemperatureLogAdapter(temperatureList);
-        recyclerView.setAdapter(adapter);
+            // Update the RecyclerView adapter on the main thread
+            getActivity().runOnUiThread(() -> {
+                adapter = new TemperatureLogAdapter(temperatureList);
+                recyclerView.setAdapter(adapter);
+            });
+        }).start();
 
         return view;
-
     }
 
     private void refreshData() {
