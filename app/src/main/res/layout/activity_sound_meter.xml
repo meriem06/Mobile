@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:background="@drawable/mobileback"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.SoundmeterActivity">
+
+    <!-- Toolbar -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="SoundMeter"
+        app:titleTextColor="#FFFFFF"
+        app:titleCentered="true" />
+
+    <!-- PointerSpeedometer CardView -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        app:cardBackgroundColor="#242632"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp">
+
+        <com.github.anastr.speedviewlib.PointerSpeedometer
+            android:id="@+id/speedometer"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            app:sv_backgroundCircleColor="#1E1E2C"
+            app:sv_centerCircleColor="#242632"
+            app:sv_markColor="#FFFFFF"
+            app:sv_markWidth="3dp"
+            app:sv_pointerColor="#FF5722"
+            app:sv_speedTextColor="#3344A8"
+            app:sv_speedTextSize="28sp"
+            app:sv_speedometerWidth="14dp"
+            app:sv_unit="dp/s"
+            app:sv_unitTextColor="#3344A8"
+            app:sv_withTremble="false" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- LinearLayout for Maximum Statistics -->
+    <LinearLayout
+        android:id="@+id/statsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <!-- Max Speed -->
+        <TextView
+            android:id="@+id/maxsoundTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Maximum(5s) 0.00"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="#3344A8"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Reset Button -->
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/statsLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Reset"
+        android:backgroundTint="#3344A8"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:textStyle="bold" />
+
+    <!-- History Button -->
+    <Button
+        android:id="@+id/viewHistoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/resetButton"
+        android:layout_marginTop="20dp"
+        android:text="Voir l'historique"
+        android:backgroundTint="#3344A8"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/deleteAllButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/viewHistoryButton"
+        android:layout_marginTop="20dp"
+        android:text="Supprimer tout"
+        android:backgroundTint="#FF5722"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:textStyle="bold" />
+
+
+
+</RelativeLayout>
