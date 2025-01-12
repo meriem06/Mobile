@@ -25,8 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:hint="YYYY-MM-DD"
-            android:inputType="date"
+            android:hint="Nom Activité"
+            android:inputType="text"
             android:padding="18dp" />
 
         <Button

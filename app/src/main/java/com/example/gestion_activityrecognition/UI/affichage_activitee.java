@@ -83,24 +83,24 @@ public class affichage_activitee extends Fragment {
                     .commit();
         });
 
-        EditText dateInput = view.findViewById(R.id.editTextDateFilter);
-        dateInput.setOnClickListener(v -> {
-            String date = dateInput.getText().toString().trim();
-            filterDataByDate(date);
+        EditText ActivityInput = view.findViewById(R.id.editTextDateFilter);
+        ActivityInput.setOnClickListener(v -> {
+            String Activity = ActivityInput.getText().toString().trim();
+            filterDataByDate(Activity);
         });
 
         return view;
     }
 
-    private void filterDataByDate(String date) {
+    private void filterDataByDate(String activity) {
         new Thread(() -> {
             List<Activity> filteredList;
-            if (date.isEmpty()) {
+            if (activity.isEmpty()) {
                 // Si aucune date n'est sélectionnée, afficher toutes les activités
                 filteredList = activiteDAO.getAll();
             } else {
                 // Filtrer les activités par date
-                filteredList = activiteDAO.getActiviteeByDate(date);
+                filteredList = activiteDAO.getActivitee(activity);
             }
             getActivity().runOnUiThread(() -> myAdapter.updateData(filteredList));
         }).start();

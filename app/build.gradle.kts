@@ -5,7 +5,11 @@ plugins {
 android {
     namespace = "com.example.gestion_activityrecognition"
     compileSdk = 34
-
+    packaging {
+        resources {
+            resources.excludes.add("META-INF/NOTICE.md")
+            resources.excludes.add("META-INF/LICENSE.md")        }
+    }
     defaultConfig {
         applicationId = "com.example.gestion_activityrecognition"
         minSdk = 24
@@ -46,4 +50,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     annotationProcessor(libs.room.compiler)
+    implementation (libs.android.mail)
+    implementation (libs.android.activation)
 }

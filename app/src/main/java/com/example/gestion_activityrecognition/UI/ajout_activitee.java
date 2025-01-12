@@ -1,4 +1,4 @@
-package com.example.gestion_activityrecognition.UI ;
+package com.example.gestion_activityrecognition.UI;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +27,7 @@ import com.example.gestion_activityrecognition.BuildConfig;
 import com.example.gestion_activityrecognition.DAO.ActivityDAO;
 import com.example.gestion_activityrecognition.Database.ActivityDatabase;
 import com.example.gestion_activityrecognition.R;
+import com.example.gestion_activityrecognition.Utils.EmailSender;
 import com.example.gestion_activityrecognition.entity.Activity;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.ActivityTransition;
@@ -43,6 +45,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.mail.MessagingException;
+
 import logger.LogFragment;
 
 public class ajout_activitee extends Fragment {
@@ -54,21 +58,22 @@ public class ajout_activitee extends Fragment {
     private boolean runningQOrLater =
             android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q;
     private LogFragment mLogFragment;
-    private Button buttonSave3;
-    private boolean activityTrackingEnabled;
     private Button saveButton;
+    private boolean activityTrackingEnabled;
     private List<ActivityTransition> activityTransitionList;
     private final String TRANSITIONS_RECEIVER_ACTION = BuildConfig.APPLICATION_ID + "TRANSITIONS_RECEIVER_ACTION";
     private PendingIntent mActivityTransitionsPendingIntent;
     private TransitionsReceiver mTransitionsReceiver;
-    private TextView logTextView;
     private ActivityDatabase database;
+
     private static String toActivityString(int activity) {
         switch (activity) {
             case DetectedActivity.STILL:
                 return "STILL";
             case DetectedActivity.WALKING:
                 return "WALKING";
+            case DetectedActivity.IN_VEHICLE:
+                return "VEHICLE";
             default:
                 return "UNKNOWN";
         }
@@ -89,23 +94,20 @@ public class ajout_activitee extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ajout_activitee, container, false);
-        mLogFragment = (LogFragment) getChildFragmentManager().findFragmentById(R.id.log_fragment);
-        toggleTrackingButton =rootView.findViewById(R.id.buttonSave3);
+        toggleTrackingButton = rootView.findViewById(R.id.buttonSave3);
         saveButton = rootView.findViewById(R.id.buttonSave);
         Button returnButton = rootView.findViewById(R.id.buttonReturn);
-        Button toggleTrackingButton = rootView.findViewById(R.id.buttonSave3);
         lottieAnimation = rootView.findViewById(R.id.lottieAnimation);
-        textView=rootView.findViewById(R.id.activityTextView);
+        textView = rootView.findViewById(R.id.activityTextView);
         lottieAnimation.setAnimation(R.raw.waiting);
+
         activityTrackingEnabled = false;
         database = ActivityDatabase.getInstance(requireContext());
         activityRecognitionDAO = database.activityDAO();
-        buttonSave3 =rootView.findViewById(R.id.buttonSave3);
 
-        // List of activity transitions to track.
         activityTransitionList = new ArrayList<>();
 
-        // TODO: Add activity transitions to track.
+        // Add activity transitions to track
         activityTransitionList.add(new ActivityTransition.Builder()
                 .setActivityType(DetectedActivity.WALKING)
                 .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
@@ -121,7 +123,8 @@ public class ajout_activitee extends Fragment {
         activityTransitionList.add(new ActivityTransition.Builder()
                 .setActivityType(DetectedActivity.STILL)
                 .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
-                .build()); activityTransitionList.add(new ActivityTransition.Builder()
+                .build());
+        activityTransitionList.add(new ActivityTransition.Builder()
                 .setActivityType(DetectedActivity.IN_VEHICLE)
                 .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
                 .build());
@@ -130,34 +133,30 @@ public class ajout_activitee extends Fragment {
                 .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
                 .build());
 
-
-
-        // TODO: Initialize PendingIntent that will be triggered when a activity transition occurs.
-
+        // Create PendingIntent to listen for activity transitions
         Intent intent = new Intent(TRANSITIONS_RECEIVER_ACTION);
-        mActivityTransitionsPendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, 0);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            flags |= PendingIntent.FLAG_MUTABLE;
+        }
+        mActivityTransitionsPendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, flags);
 
-        // TODO: Create a BroadcastReceiver to listen for activity transitions.
-        // The receiver listens for the PendingIntent above that is triggered by the system when an
-        // activity transition occurs.
+        // Create and register the BroadcastReceiver for activity transitions
         mTransitionsReceiver = new TransitionsReceiver();
-
-        printToScreen("App initialized.");
 
         toggleTrackingButton.setOnClickListener(v -> toggleActivityRecognition());
 
         saveButton.setOnClickListener(v -> {
             String activityType = textView.getText().toString();
             if (!TextUtils.isEmpty(activityType)) {
-                saveActivityToDatabase(); // Appel de la méthode pour sauvegarder l'activité
+                saveActivityToDatabase(); // Save activity
                 printToScreen("Activity saved manually: " + activityType);
             } else {
                 printToScreen("No activity type to save.");
             }
         });
-        returnButton.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
 
-        printToScreen("Fragment initialized.");
+        returnButton.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
 
         return rootView;
     }
@@ -175,26 +174,24 @@ public class ajout_activitee extends Fragment {
     }
 
     private void toggleActivityRecognition() {
-        // TODO: Enable/Disable activity tracking and ask for permissions if needed.
         if (activityRecognitionPermissionApproved()) {
-
             if (activityTrackingEnabled) {
                 disableActivityTransitions();
-
             } else {
                 enableActivityTransitions();
             }
-
         } else {
-            // Request permission and start activity for result. If the permission is approved, we
-            // want to make sure we start activity recognition tracking.
-            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACTIVITY_RECOGNITION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 1);
+            } else {
+                enableActivityTransitions(); // Enable transitions if permission already granted
+            }
         }
     }
 
     private void enableActivityTransitions() {
         ActivityTransitionRequest request = new ActivityTransitionRequest(activityTransitionList);
-
         Task<Void> task = ActivityRecognition.getClient(requireContext())
                 .requestActivityTransitionUpdates(request, mActivityTransitionsPendingIntent);
 
@@ -227,19 +224,21 @@ public class ajout_activitee extends Fragment {
     }
 
     private void printToScreen(@NonNull String message) {
-        mLogFragment.getLogView().println(message);
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
         Log.d(TAG, message);
     }
+
     private void saveActivityToDatabase() {
         String activityType = textView.getText().toString();
         long timestamp = System.currentTimeMillis();
         new Thread(() -> {
-            com.example.gestion_activityrecognition.entity.Activity activity = new Activity();
+            Activity activity = new Activity();
             activity.setActivityType(activityType);
             activity.setDate(new Date(timestamp));
             activityRecognitionDAO.insert(activity);
             Log.d(TAG, "Activity saved to database: " + activityType);
         }).start();
+
     }
 
     public class TransitionsReceiver extends BroadcastReceiver {
@@ -259,26 +258,38 @@ public class ajout_activitee extends Fragment {
                             new SimpleDateFormat("HH:mm:ss", Locale.US).format(new Date());
                     textView.setText(activityType);
                     printToScreen(info);
+                    String subject = "Activity detected";
+                    String body = "You are currently: " + activityType + " (" + transitionType + ") at " +
+                            new SimpleDateFormat("HH:mm:ss", Locale.US).format(new Date());
                     saveActivityToDatabase();
+                    try {
+                        EmailSender.sendEmail("recipient@example.com", subject, body);
+                    } catch (MessagingException e) {
+                        Log.e("EmailSend", "Messaging exception: " + e.getMessage());
+                        // Affichez un message d'erreur à l'utilisateur si nécessaire
+                    } catch (Exception e) {
+                        Log.e("EmailSend", "General exception: " + e.getMessage());
+                        // Affichez un message d'erreur à l'utilisateur si nécessaire
+                    }
+
+
+
+
+                    // Set the Lottie animation based on detected activity
                     try {
                         switch (activityType) {
                             case "WALKING":
                                 lottieAnimation.setAnimation(R.raw.walking);
-                                lottieAnimation.playAnimation();
                                 break;
                             case "STILL":
                                 lottieAnimation.setAnimation(R.raw.still);
-                                lottieAnimation.playAnimation();
                                 break;
-                            case "VEHICLE":
-                                lottieAnimation.setAnimation(R.raw.vehicule);
-                                lottieAnimation.playAnimation();
-                                break;
+
                             default:
                                 lottieAnimation.setAnimation(R.raw.waiting);
-                                lottieAnimation.playAnimation();
                                 break;
                         }
+                        lottieAnimation.playAnimation();
                     } catch (Exception e) {
                         Log.e(TAG, "Error setting Lottie animation: " + e.getMessage());
                         printToScreen("Error setting Lottie animation: " + e.getMessage());
@@ -286,7 +297,6 @@ public class ajout_activitee extends Fragment {
                 }
             } else {
                 Log.d(TAG, "No transition result in intent.");
-                //printToScreen("Error setting Lottie animation: " + e.getMessage());
             }
         }
     }

@@ -22,6 +22,6 @@ public interface ActivityDAO {
     void updateActivity(Activity activity);
     @Delete()
     void delete(Activity activity);
-    @Query("SELECT * FROM activity WHERE date = :date")
-    List<Activity> getActiviteeByDate(String date);
+    @Query("SELECT * FROM activity WHERE activityType = :activity")
+    List<Activity> getActivitee(String activity);
 }
