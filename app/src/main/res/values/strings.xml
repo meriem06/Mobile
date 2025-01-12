@@ -1,0 +1,32 @@
+<resources>
+    <!-- Application Name -->
+    <string name="app_name">UserManagmentEcoTracker</string>
+
+    <!-- Navigation Drawer Strings -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+
+    <!-- User Labels -->
+    <string name="user_birthdate_label">Birthdate: %1$s</string>
+    <string name="user_password_label">Password: ******</string>
+
+    <!-- Permission Rational Activity -->
+    <string name="title_activity_permission_rational">PermissionRationalActivity</string>
+    <string name="main_message_activity_permission_rational">Track activity changes by letting us read your phone\'s activity transitions.</string>
+    <string name="details_message_activity_permission_rational">This app\'s experience requires access to your phone\'s activity transitions to display changes from walking to standing still.</string>
+    <string name="no_thanks_activity_permission_rational">No Thanks</string>
+    <string name="continue_activity_permission_rational">Continue</string>
+    <string name="enable_disable_button_activity_recognition">Enable/Disable Activity Recognition</string>
+
+    <!-- Activity Types -->
+    <string-array name="activity_types">
+        <item>Still</item>
+        <item>Vehicle</item>
+        <item>Walking</item>
+    </string-array>
+
+    <!-- Placeholder Text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

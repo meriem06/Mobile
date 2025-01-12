@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab_data"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Dorrapackage.TemperatureFragment">
+
+    <!-- Header Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/purple"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Les Températures Enregistrées"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- RecyclerView to Display Temperature Log -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/temperature_log_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_name"
+        android:layout_marginTop="80dp"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        tools:ignore="NotSibling" />
+
+    <!-- Fragment Container for Navigation -->
+    <FrameLayout
+        android:id="@+id/fragment_container_data"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/temperature_log_recyclerview"
+        android:layout_above="@id/footer_layout"
+        android:visibility="gone" /> <!-- Initially hidden -->
+
+    <LinearLayout
+        android:id="@+id/footer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="10dp">
+
+        <!-- Home Button -->
+        <ImageButton
+            android:id="@+id/button_home"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="20dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Go to Home"
+            android:scaleType="centerInside"
+            android:src="@drawable/house_chimney"
+            app:tint="@color/purple" />
+
+        <!-- Refresh Button -->
+        <ImageButton
+            android:id="@+id/refresh"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Refresh Data"
+            android:scaleType="centerInside"
+            android:src="@drawable/refresh"
+            app:tint="@color/purple" />
+
+        <!-- Statistics Button -->
+        <ImageButton
+            android:id="@+id/statButton"
+            android:layout_width="122dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Statistics"
+            android:scaleType="centerInside"
+            android:src="@drawable/stat"
+            app:tint="@color/purple" />
+    </LinearLayout>
+</RelativeLayout>

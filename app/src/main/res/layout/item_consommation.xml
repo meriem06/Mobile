@@ -1,0 +1,91 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/row_background"
+    android:elevation="4dp"
+    android:clipToPadding="false">
+
+    <!-- Image View -->
+    <ImageView
+        android:id="@+id/leftImageView"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_conumptions"
+        android:contentDescription="@string/common_google_play_services_install_button"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Place Text -->
+    <TextView
+        android:id="@+id/placeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="start"
+        android:maxLines="1"
+        android:textColor="@color/purple"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/leftImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Distance Text -->
+    <TextView
+        android:id="@+id/distanceTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/purple"
+        android:gravity="start"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toEndOf="@id/leftImageView"
+        app:layout_constraintTop_toBottomOf="@id/placeTextView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Time Text -->
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/purple"
+        android:gravity="start"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toEndOf="@id/leftImageView"
+        app:layout_constraintTop_toBottomOf="@id/distanceTextView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Cost Text -->
+    <TextView
+        android:id="@+id/costTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/purple"
+        android:gravity="start"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintStart_toEndOf="@id/leftImageView"
+        app:layout_constraintTop_toBottomOf="@id/timeTextView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

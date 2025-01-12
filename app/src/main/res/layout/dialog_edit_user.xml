@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/rounded_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Profile Picture Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/loginbkg">
+
+            <ImageView
+                android:id="@+id/imageViewProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_profile"
+                android:scaleType="centerCrop"
+                android:background="@drawable/rounded_background"
+                android:contentDescription="User Profile Picture"
+                />
+
+            <ImageButton
+                android:id="@+id/buttonChangePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="Change Profile Picture" />
+        </LinearLayout>
+
+        <!-- Name Field -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/text_background"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp">
+
+            <EditText
+                android:id="@+id/editTextUserName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter Name"
+                android:background="@null"
+                android:padding="8dp"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/buttonEditName"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_edit_name"
+                android:background="@null"
+                android:contentDescription="Edit Name" />
+        </LinearLayout>
+
+        <!-- Email Field -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/text_background"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp">
+
+            <EditText
+                android:id="@+id/editTextUserEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter Email"
+                android:background="@null"
+                android:padding="8dp"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/buttonEditEmail"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_edit_email"
+                android:background="@null"
+                android:contentDescription="Edit Email" />
+        </LinearLayout>
+
+        <!-- Password Fields -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/text_background"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp">
+
+            <EditText
+                android:id="@+id/editTextOldPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Old Password"
+                android:inputType="textPassword"
+                android:background="@null"
+                android:padding="8dp"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editTextNewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter New Password"
+                android:inputType="textPassword"
+                android:background="@null"
+                android:padding="8dp"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/buttonEditPassword"
+                android:layout_width="340dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:background="@null"
+                android:contentDescription="Edit Password"
+                android:src="@drawable/ic_edit" />
+        </LinearLayout>
+
+        <!-- Birthdate Field -->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/text_background"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp">
+
+            <EditText
+                android:id="@+id/eeditTextBirthDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Enter Birthdate"
+                android:background="@null"
+                android:padding="8dp"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/buttonEditBirthdate"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_edit_bd"
+                android:background="@null"
+                android:contentDescription="Edit Birthdate" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
